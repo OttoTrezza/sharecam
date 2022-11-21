@@ -4,14 +4,8 @@ var Server = require('./classes/server');
 var cors = require('cors');
 var appRoutes = require('./routes/app');
 require('./config/config');
-
-
-//estaba comentado
-const path = require('path');
-const publicPath = path.resolve(__dirname, '../public');
-
-
-
+// const path = require('path');
+// const publicPath = path.resolve(__dirname, '../public');
 //Importar rutas
 
 var usuarioRoutes = require('./routes/usuario');
@@ -34,7 +28,7 @@ server.app.use(bodyParser.urlencoded({ extended: false }));
 server.app.use(bodyParser.json());
 // CORS
 // CORS
-// app.use(static(path.resolve(__dirname, '../public')));
+// app.use(express.static(path.resolve(__dirname, '../public')));
 server.app.use(cors({ origin: true, credentials: true }));
 // server.app.use(function(req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
