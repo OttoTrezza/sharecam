@@ -7,7 +7,10 @@ app.get('/', (req, res, next) => {
         mensaje: 'peticion realizada correctamente.Agregue  /public  al URL'
     });
 });
-app.use('', express.static('public/'));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public/index.html'));
+});
 // app.post('/mensajes', (req, res) => {
 //     var cuerpo = req.body.cuerpo;
 //     var de = req.body.de;

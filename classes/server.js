@@ -8,6 +8,7 @@ class Server {
 
     constructor() {
         this.app = express();
+        this.app.use('', express.static('public/'));
         this.port = process.env.PORT;
         this.httpServer = new http.Server(this.app);
         this.io = socketIO(this.httpServer);
