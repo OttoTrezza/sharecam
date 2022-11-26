@@ -1,14 +1,15 @@
 
 var express = require('express');
-require('../config/config');
+require("dotenv").config();
 var socketIO = require('socket.io');
 var http = require('http');
 const socket = require('../sockets/socket');
 class Server {
 
     constructor() {
+        console.log(process.env.PORT);
         this.app = express();
-        this.app.use('', express.static('public/'));
+        // this.app.use('', express.static('public/'));
         this.port = process.env.PORT;
         this.httpServer = new http.Server(this.app);
         this.io = socketIO(this.httpServer);
@@ -32,6 +33,7 @@ class Server {
             socket.configurarUsuario(cliente);
             socket.obtenerUsuarios(cliente);
             socket.obtenerSalas(cliente);
+            socket.obtenerSalasActivas(cliente);
             socket.mousePos(cliente);
         });
     }

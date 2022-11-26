@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
+require('dotenv').config();
+const { dbConnection } = require('./database/config');
 var bodyParser = require('body-parser');
 var Server = require('./classes/server');
 var cors = require('cors');
-var appRoutes = require('./routes/app');
-require('./config/config');
 // const path = require('path');
 // const publicPath = path.resolve(__dirname, '../public');
 //Importar rutas
@@ -12,11 +12,8 @@ var usuarioRoutes = require('./routes/usuario');
 var loginRoutes = require('./routes/login');
 var hospitalRoutes = require('./routes/hospital');
 var medicoRoutes = require('./routes/medico');
-var uploadRoutes = require('./routes/upload');
 var imagenesRoutes = require('./routes/imagenes');
 var mensajesRoutes = require('./routes/mensajes');
-var autoOTTORoutes = require('./routes/autoOTTO');
-var busquedaRoutes = require('./routes/busqueda');
 
 
 //inicializar variables
@@ -26,6 +23,11 @@ var server = Server.default.instance;
 // parse application/x-www-form-urlencoded
 server.app.use(bodyParser.urlencoded({ extended: false }));
 server.app.use(bodyParser.json());
+
+// Base de datos
+dbConnection();
+
+
 // CORS
 // CORS
 // app.use(express.static(path.resolve(__dirname, '../public')));
@@ -45,27 +47,22 @@ server.app.use(cors({ origin: true, credentials: true }));
 
 // Rutas
 //middlewear
-server.app.use('/medico', medicoRoutes);
-server.app.use('/hospital', hospitalRoutes);
-server.app.use('/usuario', usuarioRoutes);
-server.app.use('/login', loginRoutes);
-server.app.use('/upload', uploadRoutes);
-server.app.use('/img', imagenesRoutes);
-server.app.use('/mensajes', mensajesRoutes);
-server.app.use('/autoOTTO', autoOTTORoutes);
-server.app.use('/busqueda', busquedaRoutes);
+server.app.use('/api/medico', medicoRoutes);
+server.app.use('/api/hospital', hospitalRoutes);
+server.app.use('/api/usuario', usuarioRoutes);
+server.app.use('/api/login', loginRoutes);
+server.app.use('/api/img', imagenesRoutes);
+server.app.use('/api/mensajes', mensajesRoutes);
+// server.app.use('/api/', tosocketRoutes);
 
-// server.app.use(express.static(publicPath));
 
-server.app.use('/', appRoutes);
-
-//Coneccion a la base de datos
-mongoose.set('useCreateIndex', true);
-// mongodb+srv://Marsupion:<password>@cluster0-9xz8q.mongodb.net/test?retryWrites=true&w=majority
-mongoose.connect(process.env.URLDB, { useNewUrlParser: true }, (err, res) => {
-    if (err) throw err;
-    console.log('Base de datos:\x1b[32m%s\x1b[0m', 'online');
-});
+// //Coneccion a la base de datos
+// mongoose.set('useCreateIndex', true);
+// // mongodb+srv://Marsupion:<password>@cluster0-9xz8q.mongodb.net/test?retryWrites=true&w=majority
+// mongoose.connect(process.env.URLDB, { useNewUrlParser: true }, (err, res) => {
+//     if (err) throw err;
+//     console.log('Base de datos:\x1b[32m%s\x1b[0m', 'online');
+// });
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // //// ESTO ES PARA VER LA CARPETA UPLOADS DEL FILESYSTEM DIRECTAMENTE EN EL NAVEGADOR SOLO CON: HTTP:LOCALHOST3000/UPLOADS/
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

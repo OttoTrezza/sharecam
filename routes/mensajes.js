@@ -1,31 +1,34 @@
 var express = require('express');
-var app = require('express')();
+var app = express();
 // var http = require('http').createServer(app);
 // var httpServer = require('../classes/server');
 var socketIO = require('socket.io');
+const { default: server } = require('../classes/server');
 // var socketIO = require('socket.io');
 io = socketIO();
+
+const socket = require('../sockets/socket');
 var Usuario = require('../models/usuario');
 // const server = Server.default.instance;
 // router.get()....
 
-app.get('/', (req, res) => {
+// app.get('api/', (req, res) => {
 
-    // server = Server.default.instance;
-    io.emit('connect', this.usuario);
-    console.log('User connect');
-    res.send('#101000');
-    res.json({
-        ok: true,
+//     // server = Server.default.instance;
+//     io.emit('connect', this.usuario);
+//     console.log('User connect');
+//     res.send('#101000');
+//     res.json({
+//         ok: true,
 
-    });
-    //console.log(payload);
-    // res.status(200).json({
-    //     ok: true,
-    //     de: payload.de,
-    //     mensaje: payload.mensaje
-    // });
-});
+//     });
+//     //console.log(payload);
+//     // res.status(200).json({
+//     //     ok: true,
+//     //     de: payload.de,
+//     //     mensaje: payload.mensaje
+//     // });
+// });
 
 
 app.get('/mensajes', (req, res) => {
@@ -74,6 +77,7 @@ app.post('/:id', (req, res) => {
 // Servicio para obtener todos los IDs de los usuarios
 app.get('/usuarios', (req, res) => {
     // server = Server.default.instance;
+  
     server.io.clients((err, clientes) => {
         if (err) {
             return res.json({
@@ -94,6 +98,14 @@ app.get('/usuarios/detalle', (req, res) => {
         clientes: socket.usuariosConectados.getLista()
     });
 });
-
+app.get('/salas', (req, res) => {
+   salas =['Juegos', 'celupoint', 'cameraMobile']
+        res.json({
+            ok: true,
+            salas,
+            clientes: socket.usuariosConectados.getLista()
+        });
+    // });
+});
 // exports.default = router;
 module.exports = app;

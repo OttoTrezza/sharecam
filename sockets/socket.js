@@ -214,14 +214,25 @@ exports.obtenerUsuarios = (cliente) => {
 // Obtener Salas
 exports.obtenerSalas = (cliente, sal) => {
     cliente.on('obtener-salas', (callback) => {
+        // salas = obtenerSalsas(cliente, sal);
+        salas = ['Juegos', 'Cacarote', 'Dispositivos'];
+        cliente.emit('salas', salas);
+        console.log('Emitido', salas);
+        callback = { entro: true };
+
+    });
+};
+// Obtener Salas
+exports.obtenerSalasActivas = (cliente, sal) => {
+    cliente.on('obtener-salas-activas', (callback) => {
         salas = obtenerSalsas(cliente, sal);
+        // salas = ['Juegos', 'Cacarote', 'Dispositivos'];
         cliente.emit('salas-activas', salas);
         console.log('Emitido', salas);
         callback = { entro: true };
 
     });
 };
-
 obtenerSalsas = (cliente, sal) => {
 
     let falas = [];

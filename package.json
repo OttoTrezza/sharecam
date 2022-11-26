@@ -15,6 +15,7 @@
     "body": "^5.1.0",
     "copyfiles": "^2.1.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.16.3",
     "express-fileupload": "^1.1.6",
     "fix": "0.0.6",

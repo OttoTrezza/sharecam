@@ -2,7 +2,7 @@ var express = require('express');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
-require('../config/config');
+require("dotenv").config();
 
 var app = express();
 var Usuario = require('../models/usuario');
@@ -33,9 +33,9 @@ app.get('/renuevatoken', mdAutenticacion.verificaToken, (req, res) => {
 //  Autenticación normal
 // ==========================================
 app.post('/', (req, res) => {
-
+console.log('en login');
     var body = req.body;
-
+    console.log('en login', body);
     Usuario.findOne({ email: body.email }, (err, usuarioDB) => {
 
         if (err) {
@@ -84,35 +84,30 @@ app.post('/', (req, res) => {
 
 
 function obtenerMenu(ROLE) {
-
     var menu = [{
             titulo: 'Principal',
             icono: 'mdi mdi-gauge',
             submenu: [
                 { titulo: 'Dashboard', url: '/dashboard' },
-                { titulo: 'AutoOTTO', url: '/autoOTTO' },
-                { titulo: 'ProgressBar', url: '/progress' },
-                { titulo: 'Gráficas', url: '/graficas1' },
-                { titulo: 'Promesas', url: '/promesas' },
-                { titulo: 'RxJs', url: '/rxjs' },
-                { titulo: 'Mensajes', url: '/mensajes' }
-
-            ]
+                { titulo: 'Chat', url: '/mensajes' },
+                { titulo: 'Camera', url: '/camera' },
+           
+              ]
         },
         {
             titulo: 'Mantenimientos',
             icono: 'mdi mdi-folder-lock-open',
             submenu: [
-                // { titulo: 'Usuarios', url: '/usuarios' },
-                { titulo: 'Hospitales', url: '/hospitales' },
-                { titulo: 'Medicos', url: '/medicos' },
-            ]
+               ]
         }
     ];
 
     if (ROLE === 'ADMIN_ROLE') {
         menu[1].submenu.unshift({ titulo: 'Usuarios', url: '/usuarios' });
+        menu[1].submenu.unshift({ titulo: 'Salas', url: '/salas' });
+        menu[1].submenu.unshift({ titulo: 'Dispositivos', url: '/dispositivos' });
     }
+    console.log('obteniendo menu', ROLE, menu)
     return menu;
 }
 

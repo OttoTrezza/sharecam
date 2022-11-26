@@ -1,8 +1,8 @@
 var express = require('express');
-
+require("dotenv").config();
 
 var mdAutenticacion = require('../middlewares/autenticacion');
-var SEED = require('../config/config').SEED;
+// var SEED = process.environment.SEED;
 
 var app = express();
 var httpServer = require('../classes/server');

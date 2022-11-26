@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-require('../config/config');
+require("dotenv").config();
 // var SEED = process.env.SEED;
 
 
